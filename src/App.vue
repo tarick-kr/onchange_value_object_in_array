@@ -1,17 +1,37 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div v-for="(product, index) in products" :key="index">
+      <AppInput
+        :product="product"
+        @onUpdate="update($event)"
+      />
+    </div>
+    <hr/>
+    {{ products }}
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AppInput from './components/AppInput.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    AppInput
+  },
+  data () {
+    return {
+      products: [
+        { name: 'Шар', value: 5 },
+        { name: 'Цилиндр', value: 10 },
+        { name: 'Куб', value: 15 }
+      ]
+    }
+  },
+  methods: {
+    update (payload) {
+      this.$set(payload.product, payload.prop, payload.newValue)
+    }
   }
 }
 </script>
